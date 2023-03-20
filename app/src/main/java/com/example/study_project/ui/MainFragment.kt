@@ -1,6 +1,7 @@
 package com.example.study_project.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,6 @@ class MainFragment : Fragment() {
     // к примеру текст First Fragment я менять не собираюсь, и взаимодействовать с ним
     // тоже, потому тут он мне не нужен, а вот у кнопки я добавлю логику
     lateinit var buttonToSecond: Button
-
-    private val numberOne = 1
-    private val numberTwo = 2
 
     // основная задача метода onCreateView показать в каком макете / лейауте будет
     // расположен наш фрагмент, тут это R.layout.fragment_main
@@ -56,13 +54,14 @@ class MainFragment : Fragment() {
         // тут и дальше, пишу названия русскими буквами, просто что бы показать что так тоже можно,
         // НИКОГДА так не делайте, если в вашем гитхаб такое увидят на работу точно не позовут! :)
         val инстансВторогоФрагментаСПараметрами = SecondFragment.newInstance(
-            param1 = ::oneTwo,
+            param1 = ::functionToTransferAsFirstArgument,
             функцияКотораяПередаетсяВоФрагментВторымАргументом = { яСтрокаДляЭтойФункции: String,
                                                                    яЦелоеЧисло: Int ->
-                яСтрокаДляЭтойФункции
+                Log.e("myLog", {}.javaClass.enclosingMethod.name)
+                Log.e("myLog", "$яСтрокаДляЭтойФункции $яЦелоеЧисло")
             },
-            param3 = ::four,
-            param4 = ::serial
+            param3 = ::функцияКотораяЛетитПрямоВБандлТретьимАргументом,
+            param4 = ::`serial-Или-Нет-Вот-IDontKnow`
         )
 
         requireActivity().supportFragmentManager.beginTransaction()
@@ -76,19 +75,30 @@ class MainFragment : Fragment() {
             .commit()
     }
 
-    fun oneTwo(): Int {
+    // тут ниже в логировщике я использую такую конструкцию
+    // {}.javaClass.enclosingMethod.name
+    // выглядит страшно, но боятся не надо -
+    // она всего-навсего говорит как называется метод где ее применил
+    // если убрать .name в конце, то она еще и расскажет в каком пакете находится
+
+    fun functionToTransferAsFirstArgument(): Int {
+        Log.e("myLog", "oneTwo from Main")
+        Log.e("myLog", {}.javaClass.enclosingMethod.name)
         return 2
     }
 
     fun oneTwoThree(str: String, num: Int): Unit {
-        2
+        Log.e("myLog", {}.javaClass.enclosingMethod.name)
+        println("Я Принт ЛАЙН !!! из меода ${{}.javaClass.enclosingMethod.name}")
     }
 
-    fun four(per: Person, num: Int): String {
+    fun функцияКотораяЛетитПрямоВБандлТретьимАргументом(per: Person, num: Int): String {
+        Log.e("myLog", {}.javaClass.enclosingMethod.toString())
         return ""
     }
 
-    fun serial(per: Person): Person {
+    fun `serial-Или-Нет-Вот-IDontKnow`(per: Person): Person {
+        Log.e("myLog", {}.javaClass.enclosingMethod.name)
         return Person(name = per.name, age = per.age)
     }
 

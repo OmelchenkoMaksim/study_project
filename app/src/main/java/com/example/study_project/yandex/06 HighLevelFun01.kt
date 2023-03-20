@@ -7,14 +7,14 @@ package com.example.study_project.yandex
  * Он вызывается внутри цикла for и присваивает accumulator возвращаемое значение.
  */
 fun <T, R> Collection<T>.сборщик(
-    initial: R,
+    яНачальныйЭлемент: R,
     combine: (acc: R, nextElement: T) -> R
 ): R {
-    var accumulator: R = initial
+    var яАккумулируюВСебяВсеЗначения: R = яНачальныйЭлемент
     for (element: T in this) {
-        accumulator = combine(accumulator, element) as R
+        яАккумулируюВСебяВсеЗначения = combine(яАккумулируюВСебяВсеЗначения, element)
     }
-    return accumulator
+    return яАккумулируюВСебяВсеЗначения
 }
 
 /* Чтобы вызвать сборщик, вы должны передать ему экземпляр функционального типа в качестве аргумента

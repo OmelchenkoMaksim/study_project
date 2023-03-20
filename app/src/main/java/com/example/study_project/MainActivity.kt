@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         // единственное, что делает Активити это запускает первый фрагмент
         supportFragmentManager.beginTransaction()
-            // тут указано какой контейнер использовать для фрагмента
+            // тут указано какой контейнер использовать для фрагмента (R.id.mainActivityContainer)
             // и экземпляр какого фрагмент в него поместить
             .replace(R.id.mainActivityContainer, MainFragment())
             .commit()

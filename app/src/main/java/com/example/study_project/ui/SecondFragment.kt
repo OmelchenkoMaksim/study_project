@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.study_project.R
 import com.example.study_project.models.Person
+import com.example.study_project.models.TransferObject
 
 
 // у фрагментов всегда пустой конструктор (если что-то в него передать приложение упадет с ошибкой),
@@ -18,6 +19,15 @@ class SecondFragment constructor() : Fragment() {
     // чтобы не делать наллабл тип Button?
     // так как при работе с nullable типом нужно постоянно проверять что там не нал
     lateinit var buttonToFirst: Button
+
+    // кнопки для срабатывания функций
+    lateinit var firstFunButton: Button
+    lateinit var secondFunButton: Button
+    lateinit var thirdFunButton: Button
+    lateinit var fourthFunButton: Button
+
+
+    lateinit var transferObject: TransferObject
 
     // основная задача метода onCreateView показать в каком макете / лейауте будет
     // расположен наш фрагмент, тут это R.layout.fragment_second
@@ -32,9 +42,34 @@ class SecondFragment constructor() : Fragment() {
     // в нем view уже не null т.к. все элементы интерфейса созданы
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // тут мы находим все кнопки и инициализируем ими переменные
         buttonToFirst = requireView().findViewById<Button>(R.id.buttonToFirst)
+        firstFunButton = requireView().findViewById<Button>(R.id.firstFunButton)
+        secondFunButton = requireView().findViewById<Button>(R.id.secondFunButton)
+        thirdFunButton = requireView().findViewById<Button>(R.id.thirdFunButton)
+        fourthFunButton = requireView().findViewById<Button>(R.id.fourthFunButton)
+
+
+        transferObject =
+            arguments?.getSerializable("keyForFirstParameterInBundle") as TransferObject
+        println(arguments.toString())
+
+        // тут мы вешаем на каждую кнопку слушатель нажатий
         buttonToFirst.setOnClickListener {
             toFirstFragment()
+        }
+        firstFunButton.setOnClickListener {
+            transferObject.functionOne.invoke()
+        }
+        secondFunButton.setOnClickListener {
+            transferObject.functionTwo.invoke("Stub String", 0)
+        }
+        thirdFunButton.setOnClickListener {
+            transferObject.functionThree.invoke(Person(), 0)
+        }
+        fourthFunButton.setOnClickListener {
+            transferObject.functionFour.invoke(Person())
         }
     }
 
@@ -56,22 +91,16 @@ class SecondFragment constructor() : Fragment() {
             param4: (Person) -> Person
         ): SecondFragment {
 
-            // Между фрагментами можно передать данные используя Bundle,
-            // а в бандл можно поместить всякие примитивы и еще Serializable и Parcelable.
-            // то есть мы можем засунуть в него все что угодно,
-            // достаточно указать что класс наследует Serializable,
-            // в данном случае класс я решил не создавать, а создать
-            // анонимный объект - объект без явного класса (но под капотом класс все таки есть)
-            // и тут я просто указываю что этот объект наследует нужный для бандла интерфейс
-            val funcOne = object : java.io.Serializable {
-                // ЭТО ПОЛЯ АНОНИМНОГО ОБЪЕКТА
-                // такие же как и у обычного, потому могут быть хоть private.
-                // Вообще все что происходит внутри фигурных скобок анонимного объекта это
-                // по сути описание его класса
-                // только в этом случае у класса всего один экземпляр
-                val functionInsideAnonObjectFirst = param1
-
-            }
+// Между фрагментами можно передать данные используя Bundle,
+// а в бандл можно поместить всякие примитивы и еще Serializable и Parcelable.
+// то есть мы можем засунуть в него все что угодно,
+// достаточно указать что класс наследует Serializable,
+            val parcelToTheFragment: TransferObject = TransferObject(
+                functionOne = param1,
+                functionTwo = функцияКотораяПередаетсяВоФрагментВторымАргументом,
+                functionThree = param3,
+                functionFour = param4
+            )
 
             // scope функция apply позволяет создать экземпляр класса и сразу что-то с ним сделать
             // в данном случае мы передаем аргументы при создании фрагмента
@@ -87,9 +116,10 @@ class SecondFragment constructor() : Fragment() {
                     // удобство этого подхода в том что от Serializable можно
                     // наследовать любой класс и ничего при этом не переопределять
                     // т.к. Serializable это маркерный интерфейс - интерфейс без методов
-                    putSerializable(keyForFifthParameterInBundle, funcOne)
-                    putSerializable(этоКлючДляВторогоПараметраБандла, funcOne)
-
+                    putSerializable(яКлючДляПервогоАргументаБандла, parcelToTheFragment)
+//                    putSerializable(этоКлючДляВторогоПараметраБандла, funcOne)
+//                    putSerializable(keyForThirdParameterInBundle, funcOne)
+//                    putSerializable(keyForFourthParameterInBundle, funcOne)
                 }
             }
         }
@@ -100,11 +130,10 @@ class SecondFragment constructor() : Fragment() {
         ключи лучше всегда иметь неизменяемые
         и класс String для этого идеально подходит
         т.к. он не мутабельный или immutable */
-        const val keyForFirstParameterInBundle = "keyForFirstParameterInBundle"
+        const val яКлючДляПервогоАргументаБандла = "keyForFirstParameterInBundle" // пока что только один будем юзать
         const val этоКлючДляВторогоПараметраБандла = "этоКлючДляВторогоПараметраБандла"
         const val keyForThirdParameterInBundle = "keyForThirdParameterInBundle"
         const val keyForFourthParameterInBundle = "keyForFourthParameterInBundle"
-        const val keyForFifthParameterInBundle = "keyForFifthParameterInBundle"
     }
 
 }

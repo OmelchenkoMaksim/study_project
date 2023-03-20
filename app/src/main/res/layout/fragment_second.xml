@@ -30,4 +30,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/firstFunButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:text="Run First Fun"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSecond" />
+
+    <Button
+        android:id="@+id/secondFunButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:text="Run Second Fun"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSecond" />
+
+    <Button
+        android:id="@+id/thirdFunButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:text="Run Third Fun"
+        app:layout_constraintBottom_toTopOf="@+id/buttonToFirst"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstFunButton" />
+
+    <Button
+        android:id="@+id/fourthFunButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:text="Run Fourth Fun"
+        app:layout_constraintBottom_toTopOf="@+id/buttonToFirst"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secondFunButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
