@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.study_project.R
 import com.example.study_project.models.Person
@@ -18,6 +19,9 @@ class MainFragment : Fragment() {
     // к примеру текст First Fragment я менять не собираюсь, и взаимодействовать с ним
     // тоже, потому тут он мне не нужен, а вот у кнопки я добавлю логику
     lateinit var buttonToSecond: Button
+
+
+    lateinit var text: TextView
 
     // основная задача метода onCreateView показать в каком макете / лейауте будет
     // расположен наш фрагмент, тут это R.layout.fragment_main
@@ -35,6 +39,9 @@ class MainFragment : Fragment() {
         // requireView как и view это сущности интерфейса,
         // через них мы находим и можем работать с любой кнопкой, текстом и прочими вьюхами
         buttonToSecond = requireView().findViewById(R.id.buttonToSecond)
+
+        text = requireView().findViewById(R.id.messageFirst)
+
 
 
         // тут мы ставим слушателя нажатий на кнопку,

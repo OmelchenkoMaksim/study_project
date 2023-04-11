@@ -43,3 +43,7 @@ fun subtract(a: Int, b: Int): Int {
 fun multiply(a: Int, b: Int): Int {
     return a * b
 }
+
+fun multiply2(a: Int): Int {
+    return a * a
+}
