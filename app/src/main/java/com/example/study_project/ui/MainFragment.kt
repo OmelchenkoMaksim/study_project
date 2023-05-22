@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.study_project.R
 import com.example.study_project.models.Person
@@ -21,14 +20,10 @@ class MainFragment : Fragment() {
     lateinit var buttonToSecond: Button
 
 
-    lateinit var text: TextView
-
     // основная задача метода onCreateView показать в каком макете / лейауте будет
     // расположен наш фрагмент, тут это R.layout.fragment_main
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_main, container, false)
 
     // В этом методе мы пишем всю логику работы нашего фрагмента
@@ -38,10 +33,8 @@ class MainFragment : Fragment() {
 
         // requireView как и view это сущности интерфейса,
         // через них мы находим и можем работать с любой кнопкой, текстом и прочими вьюхами
+        // в requireView вшита проверка на null
         buttonToSecond = requireView().findViewById(R.id.buttonToSecond)
-
-        text = requireView().findViewById(R.id.messageFirst)
-
 
 
         // тут мы ставим слушателя нажатий на кнопку,
@@ -55,6 +48,7 @@ class MainFragment : Fragment() {
 
     // все что дальше без override это обычные методы класса, пишите таких сколько угодно
 
+    // WARNING RUSSIAN NAMING !!! NEVER USE IT
 
     // метод описывает логику старта второго фрагмента
     private fun startSecondFragment() {
@@ -62,24 +56,20 @@ class MainFragment : Fragment() {
         // НИКОГДА так не делайте, если в вашем гитхаб такое увидят на работу точно не позовут! :)
         val инстансВторогоФрагментаСПараметрами = SecondFragment.newInstance(
             param1 = ::functionToTransferAsFirstArgument,
-            функцияКотораяПередаетсяВоФрагментВторымАргументом = { яСтрокаДляЭтойФункции: String,
-                                                                   яЦелоеЧисло: Int ->
+            функцияКотораяПередаетсяВоФрагментВторымАргументом = { яСтрокаДляЭтойФункции: String, яЦелоеЧисло: Int ->
                 Log.e("myLog", {}.javaClass.enclosingMethod.name)
-                Log.e("myLog", "$яСтрокаДляЭтойФункции $яЦелоеЧисло")
+                Log.e("myLog ЗДЕСЬ Я!", "$яСтрокаДляЭтойФункции $яЦелоеЧисло")
             },
             param3 = ::функцияКотораяЛетитПрямоВБандлТретьимАргументом,
             param4 = ::`serial-Или-Нет-Вот-IDontKnow`
         )
 
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.mainActivityContainer,
-                инстансВторогоФрагментаСПараметрами
+        requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.mainActivityContainer, инстансВторогоФрагментаСПараметрами
             )
             // добавить в Бэк Стэк позволяет нам ходить назад с помощью кнопки назад и метода popBackStack:)
             // без добавления фрагмента в бэк стэк при нажатии кнопки назад эта программа просто закроется
-            .addToBackStack("SecondFragment")
-            .commit()
+            .addToBackStack("SecondFragment").commit()
     }
 
     // тут ниже в логировщике я использую такую конструкцию

@@ -1,5 +1,6 @@
 package com.example.study_project.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,8 +33,7 @@ class SecondFragment constructor() : Fragment() {
     // основная задача метода onCreateView показать в каком макете / лейауте будет
     // расположен наш фрагмент, тут это R.layout.fragment_second
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_second, container, false)
     }
@@ -50,10 +50,21 @@ class SecondFragment constructor() : Fragment() {
         thirdFunButton = requireView().findViewById<Button>(R.id.thirdFunButton)
         fourthFunButton = requireView().findViewById<Button>(R.id.fourthFunButton)
 
+// закомментировал вариант использующий сериалайзабл
+//        transferObject = arguments?.getSerializable("keyForFirstParameterInBundle") as TransferObject
 
-        transferObject =
-            arguments?.getSerializable("keyForFirstParameterInBundle") as TransferObject
-        println(arguments.toString())
+//        getParcelable устарел потому можно указать разные варианты получения
+//        в зависимости от версии SDK установленной на конкретном устройстве
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            transferObject =
+                requireArguments()
+                    .getParcelable("keyForFirstParameterInBundle", TransferObject::class.java)!!
+        } else {
+            transferObject = // старый вариант
+                requireArguments()
+                    .getParcelable<TransferObject>("keyForFirstParameterInBundle")!!
+        }
+        println("mylog $arguments")
 
         // тут мы вешаем на каждую кнопку слушатель нажатий
         buttonToFirst.setOnClickListener {
@@ -96,10 +107,7 @@ class SecondFragment constructor() : Fragment() {
 // то есть мы можем засунуть в него все что угодно,
 // достаточно указать что класс наследует Serializable,
             val parcelToTheFragment: TransferObject = TransferObject(
-                functionOne = param1,
-                functionTwo = функцияКотораяПередаетсяВоФрагментВторымАргументом,
-                functionThree = param3,
-                functionFour = param4
+                functionOne = param1, functionTwo = функцияКотораяПередаетсяВоФрагментВторымАргументом, functionThree = param3, functionFour = param4
             )
 
             // scope функция apply позволяет создать экземпляр класса и сразу что-то с ним сделать
@@ -116,7 +124,10 @@ class SecondFragment constructor() : Fragment() {
                     // удобство этого подхода в том что от Serializable можно
                     // наследовать любой класс и ничего при этом не переопределять
                     // т.к. Serializable это маркерный интерфейс - интерфейс без методов
-                    putSerializable(яКлючДляПервогоАргументаБандла, parcelToTheFragment)
+//                    putSerializable(яКлючДляПервогоАргументаБандла, parcelToTheFragment)
+
+                    // я решил использовать Parcelable так как это лучше чем Serializable
+                    putParcelable(яКлючДляПервогоАргументаБандла, parcelToTheFragment)
 //                    putSerializable(этоКлючДляВторогоПараметраБандла, funcOne)
 //                    putSerializable(keyForThirdParameterInBundle, funcOne)
 //                    putSerializable(keyForFourthParameterInBundle, funcOne)

@@ -3,8 +3,7 @@ package com.example.study_project.yandex
 // задачка на понимание работы дата классов
 data class DogPerson(
     val poroda: String = "Дворняга",
-    )
-{
+) {
 
 
     var name: String = "Шарик"
@@ -32,7 +31,7 @@ val dogSet = hashSetOf(
 fun main() {
 
     println(dogSet.size)
-dogSet.forEach {
-    println(it.name)
-}
+    dogSet.forEach {
+        println(it.name)
+    }
 }

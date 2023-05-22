@@ -1,7 +1,22 @@
+// обратите внимание что плагины в build.gradle.kts уровня модуля (этот файл)
+// дублируют плагины build.gradle.kts уровня проекта (не этот файл)
+// это не ошибка - так как блок android { } нельзя будет настроить как и зависимости без указания этих плагинов тут
+// т.е. плагины одни и те же, но на уровне модуля (тут) они получают дополнительную настройку
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
 }
+
+/*
+- Аннотация @Parcelize: Плагин id("kotlin-parcelize")
+        предоставляет поддержку аннотации @Parcelize. Эта аннотация позволяет автоматически
+генерировать реализацию интерфейса Parcelable для классов Kotlin. Интерфейс Parcelable
+        используется для передачи объектов между компонентами Android, такими как активности и
+        фрагменты, и аннотация @Parcelize значительно упрощает этот процесс.
+*/
+
+
 
 android {
     namespace = "com.example.study_project"
@@ -35,7 +50,7 @@ android {
 // а так же если бы у приложения было несколько модулей
 // то зависимость для других модулей так же бы указывалась тут
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
+    implementation("com.google.android.material:material:1.9.0")
 }
