@@ -1,15 +1,27 @@
+<!-- Самый верх манифеста это Строка <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+<manifest>: это корневой элемент-тег в файле Android Manifest.
+Все остальные элементы манифеста должны быть вложены в этот элемент.
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+это определение пространства имен XML для атрибутов Android.
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--Эти три строки называются Пермишены Permisson, они указываются на уровне тега manifest
-        и разрешают приложению ходить в сеть и обращаться к камере,
-        на самом деле они тут не нужны т.к. приложение в сеть не ходит и ничего не снимает,
-        я их оставил что бы вы понимали как открытие доступа выглядит   -->
+    <!--Эти три строки называются Пермишены Permisson, они указываются на уровне тега manifest,
+        конкретно эти разрешают приложению ходить в сеть и обращаться к камере.
+        На самом деле они тут не нужны т.к. приложение в сеть не ходит и ничего не снимает.
+        Их оставил что бы вы понимали как выглядит открытие того или иного доступа приложению   -->
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- вообще для Интернета достаточно Internet
-         ACCESS_NETWORK_STATE позволяет приложениям получать доступ к информации о сетях-->
+    <!-- вообще для Интернета достаточно только Internet,
+         а ACCESS_NETWORK_STATE позволяет приложениям получать доступ к информации о сетях-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- а этот разрешает использовать камеру-->
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA" /><!--блок ниже uses-feature нужен для камеры-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
 
     <!-- Манифест - это паспорт нашего приложения, его лицо.
@@ -23,9 +35,8 @@
         Я убрал все второстепенное отсюда, это минимальный набор тега application
         android:label - имя нашего приложения в системе, без него можно запустить приложение
         android:theme - тема приложения, без указания темы приложение не запустится-->
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+
+<!--    application - главный тег приложения-->
     <application
         android:label="@string/app_name_from_res_values"
         android:theme="@style/Theme.Study">
@@ -35,20 +46,43 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-            <!-- screenOrientation="portrait" это портретный режим для этой активити,
-            он запрещает поворачивать экран когда мы находимся на ней, зачем это делать?
-            затем что при перевороте экрана меняется конфигурация и активити умирает и возрождается
-            как Феникс и что бы данные не пропали надо подумать об их сохранении, например в ViewModel-->
+            android:screenOrientation="portrait"> <!--screenOrientation="portrait" это портретный режим для этой активити-->
+
+<!--   <intent-filter> в Android Manifest является способом, которым ваше приложение
+может объявить свои способности выполнения различных действий для системы Android.
+С его помощью вы можете определить, какие виды интентов может обрабатывать ваше приложение.         -->
+
+<!-- Тэг <intent-filter> содержит три типа: <action>, <category>, и <data>.
+
+<action>: Этот элемент объявляет, что компонент может выполнить определенное действие.
+Например, существует действие под названием android.intent.action.VIEW, которое говорит системе,
+что ваше приложение может отображать данные пользователю.
+
+<category>: Этот элемент объявляет категорию, в которую входит данное действие.
+Например, android.intent.category.LAUNCHER указывает, что данное активити должно быть
+перечислено в списке приложений на главном экране.
+
+<data>: Этот элемент указывает на типы данных, которые может обрабатывать ваш компонент.
+Он может включать тип MIME, схему URI и т.д. Например, если ваше приложение может отображать
+изображения, вы можете использовать этот элемент, чтобы указать, что ваше приложение может
+принимать интенты с типом данных "image/*".            -->
+
             <intent-filter>
                 <!-- Основных компонентов в приложении может быть много,
                 а пропись action.MAIN и category.LAUNCHER говорит что с этого компонента
                 будет запущено наше приложение при нажатии пользователем на иконку.-->
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+
+<!--                ниже все теги закрываются - это суть этой разметки,
+какие-то теги открываются, включают в себя другие теги и закрываются-->
             </intent-filter>
+
+
         </activity>
 
+
     </application>
+
 
 </manifest>
