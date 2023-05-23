@@ -4,8 +4,6 @@ package com.example.study_project.yandex
 data class DogPerson(
     val poroda: String = "Дворняга",
 ) {
-
-
     var name: String = "Шарик"
 }
 

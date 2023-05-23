@@ -124,7 +124,8 @@ class SecondFragment constructor() : Fragment() {
                     // удобство этого подхода в том что от Serializable можно
                     // наследовать любой класс и ничего при этом не переопределять
                     // т.к. Serializable это маркерный интерфейс - интерфейс без методов
-//                    putSerializable(яКлючДляПервогоАргументаБандла, parcelToTheFragment)
+                    // putSerializable(яКлючДляПервогоАргументаБандла, parcelToTheFragment)
+                    // строка выше помещает как Serializable, но ниже вам я показываю более правильный вариант
 
                     // я решил использовать Parcelable так как это лучше чем Serializable
                     putParcelable(яКлючДляПервогоАргументаБандла, parcelToTheFragment)

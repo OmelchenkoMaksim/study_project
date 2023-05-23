@@ -65,8 +65,8 @@ class MainFragment : Fragment() {
         )
 
         requireActivity().supportFragmentManager.beginTransaction().replace(
-                R.id.mainActivityContainer, инстансВторогоФрагментаСПараметрами
-            )
+            R.id.mainActivityContainer, инстансВторогоФрагментаСПараметрами
+        )
             // добавить в Бэк Стэк позволяет нам ходить назад с помощью кнопки назад и метода popBackStack:)
             // без добавления фрагмента в бэк стэк при нажатии кнопки назад эта программа просто закроется
             .addToBackStack("SecondFragment").commit()

@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         supportFragmentManager.beginTransaction()
             // тут указано какой контейнер использовать для фрагмента (R.id.mainActivityContainer)
             // и экземпляр какого фрагмент в него поместить
-            .replace(R.id.mainActivityContainer, MainFragment())
+            .replace(R.id.mainActivityContainer, MainFragment.newInstance())
             .commit()
     }
 }
