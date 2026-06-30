@@ -16,9 +16,16 @@ tasks.withType<JavaExec>().configureEach {
     }
 }
 
-tasks.register<JavaExec>("runTheDog") {
+val consoleMainClass = providers.gradleProperty("consoleMainClass")
+
+tasks.register<JavaExec>("runConsoleMain") {
     group = "application"
-    description = "Run TheDog main()"
+    description = "Run console main() passed via -PconsoleMainClass"
     classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("com.example.study_project.yandex._02_TheDogKt")
+    mainClass.set(consoleMainClass)
+    doFirst {
+        require(consoleMainClass.isPresent) {
+            "Specify -PconsoleMainClass=<fully.qualified.MainKt>"
+        }
+    }
 }

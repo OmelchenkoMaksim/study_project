@@ -1,11 +1,13 @@
+import com.android.build.api.dsl.ApplicationExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 // обратите внимание, что плагины в build.gradle.kts уровня модуля (этот файл)
 // дублируют плагины build.gradle.kts уровня проекта (не этот файл)
 // это не ошибка - так как блок android { } нельзя будет настроить как и зависимости без указания этих плагинов тут
 // т.е. плагины одни и те же, но на уровне модуля (тут) они получают дополнительную настройку
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 /*
@@ -16,14 +18,12 @@ plugins {
         фрагменты, и аннотация @Parcelize значительно упрощает этот процесс (ищите пример в этом приложении).
 */
 
-
-
-android {
+extensions.configure<ApplicationExtension> {
     namespace = "com.example.study_project"
     // compileSdk это версия сдк на которой вы пишете приложение
     // и например если у вас не скачена сдк 33 (SDK Manager)
     // то у вас не будет документации к классам Андроид типа Активити
-    compileSdk = 34
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.example.study_project"
@@ -36,9 +36,11 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+}
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }
 
@@ -50,7 +52,7 @@ android {
 // а так же если бы у приложения было несколько модулей
 // то зависимость для других модулей так же бы указывалась тут
 dependencies {
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.core:core-ktx:1.19.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.14.0")
 }
