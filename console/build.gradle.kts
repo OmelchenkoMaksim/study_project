@@ -6,6 +6,11 @@ kotlin {
     jvmToolchain(17)
 }
 
+tasks.withType<JavaExec>().configureEach {
+    // Keep console output readable across OSes (especially Windows terminals).
+    systemProperty("file.encoding", "UTF-8")
+}
+
 tasks.register<JavaExec>("runTheDog") {
     group = "application"
     description = "Run TheDog main()"
