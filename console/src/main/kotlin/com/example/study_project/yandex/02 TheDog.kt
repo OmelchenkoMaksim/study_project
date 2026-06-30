@@ -1,6 +1,6 @@
 package com.example.study_project.yandex
 
-// задачка на понимание работы дата классов
+// задачка на понимание работы дата классов и коллекций
 data class DogPerson(
     val poroda: String = "Дворняга",
 ) {

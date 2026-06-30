@@ -5,6 +5,9 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
 
 dependencyResolutionManagement {
     repositories {
@@ -19,6 +22,7 @@ dependencyResolutionManagement {
 rootProject.name = "Study Project"
 // тут указано какие модули включены в приложение, у нас только один app
 include(":app")
+include(":console")
 
 /*
 Файл settings.gradle.kts - это файл настройки проекта в Kotlin DSL для системы сборки Gradle.

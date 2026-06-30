@@ -2,3 +2,13 @@
 /.idea/
 /build/
 /app/build/
+**/build/
+
+# Local machine SDK path (Android Studio generated)
+local.properties
+
+# Gradle toolchain daemon metadata (machine-specific)
+gradle/gradle-daemon-jvm.properties
+
+# IDE module files
+*.iml
