@@ -1,3 +1,5 @@
+import java.nio.charset.Charset
+
 plugins {
     id("org.jetbrains.kotlin.jvm")
 }
@@ -7,8 +9,11 @@ kotlin {
 }
 
 tasks.withType<JavaExec>().configureEach {
-    // Keep console output readable across OSes (especially Windows terminals).
-    systemProperty("file.encoding", "UTF-8")
+    // Match process output encoding to the host terminal encoding.
+    val nativeEncoding = System.getProperty("native.encoding") ?: Charset.defaultCharset().name()
+    if (!nativeEncoding.isNullOrBlank()) {
+        systemProperty("file.encoding", nativeEncoding)
+    }
 }
 
 tasks.register<JavaExec>("runTheDog") {
