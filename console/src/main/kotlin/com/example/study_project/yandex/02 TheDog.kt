@@ -7,7 +7,6 @@ data class DogPerson(
     var name: String = "Шарик"
 }
 
-
 val dogSet = hashSetOf(
     DogPerson(),
     DogPerson().apply {
@@ -22,14 +21,21 @@ val dogSet = hashSetOf(
     DogPerson(poroda = "Овчарка").apply {
         name = "Молли"
     }
-
 )
-
 
 fun main() {
 
+    println("----")
+    println("----")
+    println("----")
+    println("----")
+
     println(dogSet.size)
-    dogSet.forEach {
-        println(it.name)
-    }
+
+    dogSet.forEach { println(it.name) }
+
+    println("----")
+    println("----")
+    println("----")
+    println("----")
 }
