@@ -1,4 +1,4 @@
-package com.example.study_project.yandex
+package com.example.study_project.old_tasks
 
 import android.app.Activity
 import android.os.Build

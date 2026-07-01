@@ -1,4 +1,4 @@
-package com.example.study_project.yandex
+package com.example.study_project.old_tasks
 
 // самая простая методика сортировки - пузырьком, в виде функции расширения
 fun main() {
