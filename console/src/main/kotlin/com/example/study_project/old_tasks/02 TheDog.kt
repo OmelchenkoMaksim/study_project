@@ -26,12 +26,11 @@ val dogSet = hashSetOf(
 fun main() {
     println("----")
     println("----")
-    println("----")
     println()
 
     println("собак всего = " + dogSet.size)
 
-    dogSet.forEach { println(it.name) }
+    dogSet.forEach { println(it.name+ " " + it.hashCode()) }
 
     println()
     println("----")
