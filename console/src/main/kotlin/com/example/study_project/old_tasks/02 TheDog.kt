@@ -30,7 +30,7 @@ fun main() {
 
     println("собак всего = " + dogSet.size)
 
-    dogSet.forEach { println(it.name+ " " + it.hashCode()) }
+    dogSet.forEach { println(it.name+ " " + "it.hashCode()") }
 
     println()
     println("----")
