@@ -30,6 +30,7 @@ val androidJar = file("$androidSdkDir/platforms/android-34/android.jar").also { 
 dependencies {
     // Stubs for compile + JVM main(); real Android APIs work only on device/emulator.
     implementation(files(androidJar))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
 }
 
 tasks.withType<JavaExec>().configureEach {
