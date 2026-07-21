@@ -124,8 +124,85 @@ Screen state
 
 
 
+/* Решение на корутинах (надо вкл. вью биндинг)
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.app.databinding.ActivityMainBinding
+import java.io.IOException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    private var buttonProcessingJob: Job? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        observeResumedState()
+
+        binding.button.setOnClickListener {
+            processButtonClick()
+        }
+    }
+
+    private fun observeResumedState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                delay(500)
+
+                binding.textView.text = "Task from resumed state"
+            }
+        }
+    }
+
+    private fun processButtonClick() {
+        if (buttonProcessingJob?.isActive == true) {
+            return
+        }
+
+        buttonProcessingJob = lifecycleScope.launch {
+            delay(5_000)
+
+            binding.textView.text = "Task started"
+
+            try {
+                someLongOperation()
+
+                binding.textView.text = "Task completed after delay"
+            } catch (error: IOException) {
+                Timber.e(
+                    error,
+                    "mylog 001 task failed",
+                )
+
+                binding.textView.text = "Task failed"
+            }
+        }
+    }
+
+    private suspend fun someLongOperation() {
+        withContext(Dispatchers.IO) {
+            // Только для блокирующего API:
+            // blockingNetworkClient.execute()
+        }
+    }
+}
+
+*/
 
 
 
